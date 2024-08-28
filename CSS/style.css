@@ -1,6 +1,19 @@
-input[type="number"] {
-    text-align: end;
-    font-size: 1.8rem;
-    font-weight: 500;
-    width: 110px;
+@media (width >=320px) {
+    input[type="number"] {
+        text-align: end;
+        font-size: 1.8rem;
+        font-weight: 500;
+        width: 80px;
+        height: 50px;
+    }
+}
+
+@media (width >=430px) {
+    input[type="number"] {
+        text-align: end;
+        font-size: 1.8rem;
+        font-weight: 500;
+        width: 110px;
+        height: auto;
+    }
 }
