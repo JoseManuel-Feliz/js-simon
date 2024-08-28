@@ -8,7 +8,7 @@ console.log('JS OK')
 
 //* 2. Creare un array che conterra i numeri da mostrare all'inizio del countdown.
 
-//* 2. Creare un array che conterra il value degli input number.
+//* 3. Creare un array che conterra il value degli input number.
 
 
 //* 4. creare un evento al submit del form.
@@ -37,3 +37,12 @@ const playBtn = document.getElementById('play')
 console.log(guessNum, enterNum[0])
 
 //* 2. Creare un array che conterra i numeri da mostrare all'inizio del countdown.
+
+let numbersToGuess = [5, 5, 5, 5, 5]
+let i;
+for (i = 0; i < guessNum.length; i++) {
+    guessNum[i].innerText = numbersToGuess[i]
+    console.log()
+    console.log(guessNum[i].innerText)
+}
+
