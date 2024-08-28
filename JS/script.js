@@ -22,6 +22,18 @@ console.log('JS OK')
     ? 4f. creare una condizione che verifichi se il value degli input è incluso nel array dei nr casuali.
         ! stampare un messaggio appropiato in caso che siano presenti o meno.
 
-
-
 */
+
+
+//* 1. Recuperare gli elementi d'interesse all'interno del DOM.
+
+const simonCountDown = document.getElementById('count-down')
+const requestMessage = document.getElementById('request-message')
+const form = document.querySelector('form')
+const guessNum = document.querySelectorAll('span')
+const enterNum = document.querySelectorAll('input')
+const playBtn = document.getElementById('play')
+
+console.log(guessNum, enterNum[0])
+
+//* 2. Creare un array che conterra i numeri da mostrare all'inizio del countdown.
