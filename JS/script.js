@@ -41,14 +41,22 @@ const playBtn = document.getElementById('play');
 simonCountDown.innerText = 'Simon Says';
 
 console.log(guessNum, enterNum[0]);
-//* 2. Creare un array che conterra i numeri da mostrare all'inizio del countdown.
 
-let numbersToGuess = [1, 2, 3, 4, 5];
+const min = 1;
+const max = 100;
+const totNumbers = 5;
+let numbersToGuess = []
 
-for (let i = 0; i < guessNum.length; i++) {
-    guessNum[i].innerText = numbersToGuess[i]
-    console.log(guessNum[i].innerText)
+//* Funzioni
+const getRandomNum = (min, max, tot) => {
+    const numbers = [];
+    while (numbers.length < tot) {
+        const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+        if (!numbers.includes(randomNum)) numbers.push(randomNum);
+    }
+    return numbers;
 }
+
 
 
 //? Fase gestione degli eventi
@@ -56,7 +64,7 @@ for (let i = 0; i < guessNum.length; i++) {
 //* 4. creare un evento al submit del form.
 
 form.addEventListener('submit', function (event) {
-    replyMessage.classList.remove('text-success', 'text-warning')
+    replyMessage.classList.remove('text-success', 'text-warning', 'text-danger')
 
 
     //* 3. Creare un array che conterra il value degli input number.
@@ -67,7 +75,7 @@ form.addEventListener('submit', function (event) {
     event.preventDefault();
     for (let i = 0; i < enterNum.length; i++) {
         const value = parseInt(enterNum[i].value)
-        if (!numEntered.includes(value)) {
+        if (value >= min && value <= max && !numEntered.includes(value)) {
             numEntered.push(value)
 
         }
@@ -85,14 +93,24 @@ form.addEventListener('submit', function (event) {
     }
     console.log(guessed)
 
+    //! validazione
+    if (numbersToGuess.length !== numEntered.length) {
+        replyMessage.innerText = 'Sono stati inseriti valori non validi o duplicati';
+        replyMessage.classList.add('text-danger');
+        return
+    }
 
     if (guessed.length === numbersToGuess.length) {
         replyMessage.classList.add('text-success');
-        replyMessage.innerText = `Bravə, hai indovinato tutti i ${guessed.length} numeri! (${guessed})`
+        replyMessage.innerText = `Bravə, hai indovinato tutti i ${guessed.length} numeri! ( ${guessed} )`
+    } else if (guessed.length === 0) {
+        replyMessage.classList.add('text-danger');
+        replyMessage.innerHTML = `Hai indovinato ${guessed.length} numeri! <br> Ritenta di nuovo`
     } else {
         replyMessage.classList.add('text-warning');
-        replyMessage.innerText = `Hai indovinato soltanto ${guessed.length} numeri! (${guessed}) ritenta di nuovo`
+        replyMessage.innerText = `Hai indovinato soltanto ${guessed.length} dei numeri totali! ( ${guessed} ) ritenta di nuovo`
     }
+
 
 
     console.table(numEntered, numbersToGuess, replyMessage)
@@ -100,12 +118,25 @@ form.addEventListener('submit', function (event) {
 
 playBtn.addEventListener('click', function (event) {
     event.preventDefault();
+
+    //* 2. Creare un array che conterra i numeri da mostrare all'inizio del countdown.
+
+    numbersToGuess = getRandomNum(min, max, totNumbers);
+    console.log(numbersToGuess)
+    for (let i = 0; i < guessNum.length; i++) {
+        guessNum[i].innerText = numbersToGuess[i]
+        console.log(guessNum[i].innerText)
+
+    }
+
+
+
     //nascondo il btn play
     playBtn.classList.add('d-none')
     //rimuovo le classi d-none sugli elementi che mi interessano
     requestMessage.classList.remove('d-none')
 
-    let seconds = 10;
+    let seconds = 30;
     simonCountDown.innerText = seconds
     requestMessage.innerText = 'Memorizza i numeri entro il tempo limite!'
     replyMessage.innerText = ''
